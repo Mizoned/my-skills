@@ -2,8 +2,7 @@
   <div class="skill">
     <div class="skill__inner">
       <div class="skill__content">
-        <div class="skill__img"><img :src="formPathImage(skill.src)" alt=""></div>
-        <div class="skill__name">{{ skill.name }}</div>
+        <skill-name :skill="skill"></skill-name>
       </div>
       <div class="skill__control">
         <div class="skill__diagram">
@@ -39,13 +38,6 @@ export default {
     }
   },
   methods: {
-    formPathImage(fileName) {
-      if (!fileName) {
-        return require('@/assets/images/icons/icon-error-loading-36.svg')
-      }
-
-      return require(`@/assets/images/icons/${fileName.toLowerCase()}`);
-    },
     editSkill(skill) {
       this.$emit('edit', skill);
     },
@@ -77,25 +69,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    &__content {
-      display: flex;
-      column-gap: 20px;
-      align-items: center;
-    }
-
-    &__name {
-      font-weight: 600;
-      font-size: 24px;
-      color: #2E4052;
-    }
-
-    &__img {
-      img {
-        display: flex;
-        width: 64px;
-      }
     }
 
     &__buttons {

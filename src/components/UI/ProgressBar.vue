@@ -1,5 +1,5 @@
 <template>
-  <div class="progress">
+  <div class="progress" :style="styleContainer">
     <div class="progress__text">{{this.process}}/100</div>
     <svg class="progress-ring" :width="circle.diameter" :height="circle.diameter">
       <circle class="progress-ring__circle"
@@ -33,7 +33,7 @@ export default {
     },
     process: {
       type: Number,
-      default: 0,
+      require: true,
     }
   },
   data() {
@@ -41,6 +41,10 @@ export default {
       styleCircle: {
         strokeDashoffset: 0,
         strokeDasharray: 0,
+      },
+      styleContainer: {
+        width: 0,
+        height: 0
       }
     }
   },
@@ -52,6 +56,8 @@ export default {
     setStyleCircleSettings() {
       this.styleCircle.strokeDashoffset = this.circle.circumference - this.process / 100 * this.circle.circumference;
       this.styleCircle.strokeDasharray = `${ this.circle.circumference } ${ this.circle.circumference }`;
+      this.styleContainer.width = this.circle.diameter + 'px';
+      this.styleContainer.height = this.circle.diameter + 'px';
     }
   },
   created() {
