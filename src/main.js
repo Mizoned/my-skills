@@ -4,6 +4,8 @@ import router from '@/router'
 import componentsUI from '@/components/UI'
 import store from '@/store'
 
+import '@/assets/styles/main.css';
+
 const app = createApp(App);
 
 componentsUI.forEach(component => {
