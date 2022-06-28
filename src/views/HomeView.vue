@@ -1,5 +1,5 @@
 <template>
-  <skills-list :skills="skills"></skills-list>
+  <skills-list :skills="skills" @edit="editSkill" @remove="removeSkill"></skills-list>
 </template>
 
 <script>
@@ -59,6 +59,15 @@ export default {
           src: 'icon-git-36.svg'
         }
       ]
+    }
+  },
+  methods: {
+    editSkill(skill) {
+      let index = this.skills.findIndex(item => item.id === skill.id);
+
+    },
+    removeSkill(skill) {
+      this.skills = [...this.skills.filter(s => s.id !== skill.id)];
     }
   }
 }

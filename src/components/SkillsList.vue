@@ -3,7 +3,8 @@
     <div class="skills">
       <h1 class="skills__title title">Skills</h1>
       <div class="skills__list">
-        <skill-element v-for="skill in skills" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
+        <skill-element v-if="skills.length" v-for="skill in skills" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
+        <div v-else class="skills__empty">Список пуст</div>
       </div>
     </div>
   </div>
@@ -24,10 +25,10 @@ export default {
   },
   methods: {
     editSkill(skill) {
-      console.log(skill);
+      this.$emit('edit', skill);
     },
     removeSkill(skill) {
-      console.log(skill);
+      this.$emit('remove', skill);
     }
   }
 
@@ -47,6 +48,15 @@ export default {
       flex-direction: column;
       row-gap: 20px;
       margin: 0 auto;
+    }
+    &__empty {
+      padding: 25px 0;
+      font-size: 24px;
+      background: #D3E8FF;
+      color: #2E4052;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
     }
   }
 </style>
