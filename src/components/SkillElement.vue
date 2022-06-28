@@ -2,14 +2,14 @@
   <div class="skill">
     <div class="skill__inner">
       <div class="skill__content">
-        <div class="skill__img"><img src="@/assets/images/icons/icon-vue-36.svg" alt=""></div>
-        <div class="skill__name">Vue JS</div>
+        <div class="skill__img"><img :src="formPathImage(skill.src)" alt=""></div>
+        <div class="skill__name">{{ skill.name }}</div>
       </div>
       <div class="skill__control">
         <div class="skill__diagram"></div>
         <div class="skill__buttons">
-          <button class="btn"><img src="@/assets/images/icons/icon-edit-24.svg" alt=""></button>
-          <button class="btn"><img src="@/assets/images/icons/icon-remove-24.svg" alt=""></button>
+          <button-with-icon @click="editSkill(skill)"><slot name="icon"><img src="@/assets/images/icons/icon-edit-24.svg" alt=""></slot></button-with-icon>
+          <button-with-icon @click="removeSkill(skill)"><slot name="icon"><img src="@/assets/images/icons/icon-remove-24.svg" alt=""></slot></button-with-icon>
         </div>
       </div>
     </div>
@@ -17,8 +17,32 @@
 </template>
 
 <script>
+import ButtonWithIcon from "@/components/UI/ButtonWithIcon";
+
 export default {
-  name: "SkillElement"
+  name: "SkillElement",
+  components: { ButtonWithIcon },
+  props: {
+    skill: {
+      type: Object,
+      require: true
+    }
+  },
+  methods: {
+    formPathImage(fileName) {
+      if (!fileName) {
+        return require('../assets/images/icons/icon-error-loading-36.svg')
+      }
+
+      return require(`../assets/images/icons/${fileName.toLowerCase()}`);
+    },
+    editSkill(skill) {
+      this.$emit('edit', skill);
+    },
+    removeSkill(skill) {
+      this.$emit('remove', skill)
+    }
+  }
 }
 </script>
 
@@ -36,7 +60,7 @@ export default {
 
     &__content {
       display: flex;
-      column-gap: 10px;
+      column-gap: 20px;
       align-items: center;
     }
 
@@ -57,18 +81,6 @@ export default {
       display: flex;
       flex-direction: column;
       row-gap: 6px;
-    }
-  }
-
-  .btn {
-    background: #2E4052;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
-
-    img {
-      width: 25px;
-      display: block;
     }
   }
 </style>

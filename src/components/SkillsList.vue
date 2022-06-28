@@ -1,24 +1,52 @@
 <template>
-
+  <div class="container">
+    <div class="skills">
+      <h1 class="skills__title title">Skills</h1>
+      <div class="skills__list">
+        <skill-element v-for="skill in skills" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import skillElement from "@/components/SkillElement";
+import SkillElement from "@/components/SkillElement";
 export default {
   name: "SkillsList",
+  props: {
+    skills: {
+      type: Array,
+      default: () => []
+    }
+  },
   components: {
-    skillElement
+    SkillElement
+  },
+  methods: {
+    editSkill(skill) {
+      console.log(skill);
+    },
+    removeSkill(skill) {
+      console.log(skill);
+    }
   }
 
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .skills {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    /*max-width: 800px;*/
-    margin: 0 auto;
+    padding: 40px 0;
+
+    &__title {
+      padding-bottom: 40px;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      margin: 0 auto;
+    }
   }
 </style>
