@@ -32,7 +32,8 @@ export default {
     }
 
     img {
-      width: 25px;
+      width: 24px;
+      height: 24px;
       display: block;
     }
   }
