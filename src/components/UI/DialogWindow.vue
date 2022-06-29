@@ -1,12 +1,25 @@
 <template>
-  <div class="dialog-window">
-    <slot></slot>
+  <div v-if="show" class="dialog-window" @click="hideDialog">
+    <div @click.stop class="dialog-window__content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "DialogWindow"
+  name: "DialogWindow",
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    hideDialog() {
+      this.$emit('update:show', false);
+    }
+  }
 }
 </script>
 

@@ -2,12 +2,12 @@
   <div class="skill-editing-form">
     <div class="skill-editing-form__inner">
       <div class="skill-editing-form__diagram">
-        <progress-bar :circle="circle" :process="process"></progress-bar>
+        <progress-bar :circle="circle" :process="setProcess"></progress-bar>
       </div>
       <div class="skill-editing-form__content">
           <skill-name :skill="skill"></skill-name>
-          <input class="input" v-model="process" placeholder="Process"/>
-          <button-with-icon style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-save-24.svg" alt=""></slot>Save</button-with-icon>
+          <input class="input" v-focus type="text" v-model="process" placeholder="Process"/>
+          <button-with-icon @click="saveProcess(setProcess)" style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-save-24.svg" alt=""></slot>Save</button-with-icon>
       </div>
     </div>
   </div>
@@ -30,6 +30,32 @@ export default {
         stroke: 10,
       },
       process: 0,
+      errors: []
+    }
+  },
+  computed: {
+    setProcess() {
+      const regPattern = '^[0-9]+$';
+
+      let regExp = new RegExp(regPattern, 'i');
+      if (!regExp.test(this.process)) {
+        return 0;
+      }
+
+      if (this.process < 0) {
+        return 0;
+      }
+
+      if (this.process > 100) {
+        return 100;
+      }
+
+      return +this.process;
+    }
+  },
+  methods: {
+    saveProcess(process) {
+      this.$emit('save', process);
     }
   },
   mounted() {

@@ -1,11 +1,9 @@
 <template>
-  <div class="container">
-    <div class="skills">
-      <h1 class="skills__title title">Skills</h1>
-      <div class="skills__list">
-        <skill-element v-if="skills.length" v-for="skill in skills" :key="skill.id" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
-        <div v-else class="skills__empty">Список пуст</div>
-      </div>
+  <div class="skills">
+    <h1 class="skills__title title">Skills</h1>
+    <div class="skills__list">
+      <skill-element v-if="skills.length" v-for="skill in skills" :key="skill.id" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
+      <div v-else class="skills__empty">Список пуст</div>
     </div>
   </div>
 </template>

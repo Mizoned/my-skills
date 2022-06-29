@@ -34,6 +34,7 @@ export default {
     process: {
       type: Number,
       require: true,
+      default: 0
     }
   },
   data() {
@@ -65,7 +66,7 @@ export default {
     this.setStyleCircleSettings(this.circle);
   },
   watch: {
-    process() {
+    process(newValue) {
       this.setStyleCircleSettings(this.circle);
     }
   }
