@@ -1,7 +1,9 @@
 import { createStore } from 'vuex'
+import auth from "@/store/auth";
 
 export default createStore({
   state: {
+    skillList: []
   },
   getters: {
   },
@@ -10,5 +12,6 @@ export default createStore({
   actions: {
   },
   modules: {
+    auth
   }
 })

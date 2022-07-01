@@ -6,7 +6,7 @@
       </div>
       <div class="skill-editing-form__content">
           <skill-name :skill="skill"></skill-name>
-          <input class="input" v-focus type="text" v-model="process" placeholder="Process"/>
+          <input-form v-focus type="text" v-model="process" placeholder="Process"/>
           <button-with-icon @click="saveProcess(setProcess)" style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-save-24.svg" alt=""></slot>Save</button-with-icon>
       </div>
     </div>
@@ -38,16 +38,9 @@ export default {
       const regPattern = '^[0-9]+$';
 
       let regExp = new RegExp(regPattern, 'i');
-      if (!regExp.test(this.process)) {
-        return 0;
-      }
 
-      if (this.process < 0) {
-        return 0;
-      }
-
-      if (this.process > 100) {
-        return 100;
+      if (!regExp.test(this.process) || this.process < 0 || this.process > 100) {
+        return this.skill.process;
       }
 
       return +this.process;
@@ -79,18 +72,6 @@ export default {
       display: flex;
       flex-direction: column;
       row-gap: 16px;
-    }
-  }
-  .input {
-    padding: 10px 20px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #2E4052;
-    border: 1px solid #2E4052;
-    border-radius: 5px;
-
-    &::-webkit-input-placeholder {
-      color: #9EB8D6;
     }
   }
 </style>

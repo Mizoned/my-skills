@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import ProfileView from "@/views/ProfileView";
+import SignIn from "@/views/SignIn";
+import Register from "@/views/Register";
 
 const routes = [
   {
@@ -10,7 +12,16 @@ const routes = [
   },
   {
     path: '/profile',
-    component: ProfileView
+    component: ProfileView,
+    meta: { authentication: true },
+  },
+  {
+    path: '/login',
+    component: SignIn
+  },
+  {
+    path: '/register',
+    component: Register
   },
   {
     path: '/404',
@@ -25,6 +36,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
+
+router.beforeEach(async (to, from) => {
+
+});
 
 export default router
