@@ -4,6 +4,7 @@ import NotFoundView from '@/views/NotFoundView.vue'
 import ProfileView from "@/views/ProfileView";
 import SignIn from "@/views/SignIn";
 import Register from "@/views/Register";
+import { getAuth } from "firebase/auth";
 
 const routes = [
   {
@@ -38,7 +39,15 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, from, next) => {
+  const currentUser = getAuth().currentUser;
+  const requireAuth = to.matched.some(record => record.meta.authentication);
+
+  if (requireAuth && !currentUser) {
+    next('/login');
+  } else {
+    next();
+  }
 
 });
 
