@@ -39,6 +39,9 @@ export default {
 
     &__title {
       padding-bottom: 40px;
+      font-weight: 600;
+      font-size: 48px;
+      color: #2E4052;
     }
 
     &__list {

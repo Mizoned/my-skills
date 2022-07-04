@@ -1,8 +1,6 @@
 <template>
-<!--  <div>-->
-<!--    <button-component @click="showDialog">Add Skill</button-component>-->
-<!--  </div>-->
-  <skills-list :skills="skills" @edit="editSkill" @remove="removeSkill"></skills-list>
+  <skills-list v-if="!isSkillLoading" :skills="skills" @edit="editSkill" @remove="removeSkill"></skills-list>
+  <div class="loading" v-else>Загрузка...</div>
   <dialog-window v-model:show="dialogVisible">
     <edit-skill-form @save="saveSkill" @cancel="dialogVisible = false" :skill="tmpSkill"></edit-skill-form>
   </dialog-window>
@@ -19,7 +17,8 @@ export default {
     return {
       skills: [],
       dialogVisible: false,
-      tmpSkill: {}
+      tmpSkill: {},
+      isSkillLoading: false
     }
   },
   methods: {
@@ -42,10 +41,16 @@ export default {
     },
     async fetchSkills() {
       try {
+        this.isSkillLoading = true;
         const response = await axios.get('/static/skillList.json');
-        this.skills = response.data;
+        setTimeout(() => {
+          this.skills = response.data;
+          this.isSkillLoading = false;
+        }, 2000);
       } catch (e) {
         console.log(e);
+      } finally {
+
       }
     }
   },
@@ -55,4 +60,16 @@ export default {
 }
 </script>
 <style scoped>
+  .home-page {
+    padding: 40px 0;
+  }
+  .loading {
+    padding: 25px 0;
+    font-size: 24px;
+    background: #D3E8FF;
+    color: #2E4052;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+  }
 </style>
