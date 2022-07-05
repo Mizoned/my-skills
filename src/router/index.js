@@ -4,12 +4,13 @@ import NotFoundView from '@/views/NotFoundView.vue'
 import ProfileView from "@/views/ProfileView";
 import SignIn from "@/views/SignIn";
 import Register from "@/views/Register";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const routes = [
   {
     path: '/',
     redirect: '/profile',
+    meta: { authentication: true }
   },
   {
     path: '/profile',
@@ -39,16 +40,29 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  const currentUser = getAuth().currentUser;
-  const requireAuth = to.matched.some(record => record.meta.authentication);
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListener = onAuthStateChanged(
+        getAuth(),
+        (user) => {
+          removeListener();
+          resolve(user)
+        },
+        reject
+    );
+  });
+}
 
-  if (requireAuth && !currentUser) {
-    next('/login');
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.authentication)) {
+    if (await getCurrentUser) {
+      next();
+    } else {
+      next('/login');
+    }
   } else {
     next();
   }
-
 });
 
 export default router
