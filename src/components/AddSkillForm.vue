@@ -5,21 +5,29 @@
         <progress-bar :circle="circle" :process="setProcess"></progress-bar>
       </div>
       <div class="skill-add-form__content">
-        <skill-name :skill="{name: 'Java Script', src: 'icon-js-36.svg'}">Java Script</skill-name>
+          <v-skill-select
+              :options="options"
+              :selected="selectedOption"
+              @select="selectOption"
+          />
         <input-form v-focus type="text" v-model="process" placeholder="Process"/>
-        <button-with-icon style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-add-24.svg" alt=""></slot>Add</button-with-icon>
+        <button-with-icon class="skill-add-form__btn" @click="addSkill" style="align-self: flex-end">Send</button-with-icon>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SkillName from "@/components/SkillName";
+import VSkillSelect from "@/components/UI/VSkillSelect";
 export default {
   name: "AddSkillForm",
-  components: {
-    SkillName
+  props: {
+    options: {
+      type: Array,
+      default: () => []
+    }
   },
+  components: { VSkillSelect },
   data() {
     return {
       circle: {
@@ -27,7 +35,15 @@ export default {
         stroke: 8,
       },
       selectedOption: {},
-      process: ''
+      process: '',
+    }
+  },
+  methods: {
+    selectOption(option) {
+      this.selectedOption = option;
+    },
+    addSkill() {
+      this.$emit('add', this.formDate);
     }
   },
   computed: {
@@ -41,6 +57,13 @@ export default {
       }
 
       return +this.process;
+    },
+    formDate() {
+      return {
+        name: this.selectedOption.name,
+        process: this.setProcess,
+        src: this.selectedOption.src
+      }
     }
   },
 }
@@ -60,6 +83,10 @@ export default {
       display: flex;
       flex-direction: column;
       row-gap: 16px;
+    }
+
+    &__btn {
+      min-width: 100px;
     }
   }
 </style>

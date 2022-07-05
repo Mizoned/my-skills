@@ -4,7 +4,7 @@ import DialogWindow from "@/components/UI/DialogWindow";
 import SkillName from "@/components/SkillName";
 import ButtonComponent from "@/components/UI/ButtonComponent";
 import IInputForm from "@/components/UI/InputForm";
-import VSelect from "@/components/UI/V-Select";
+import VSelect from "@/components/UI/VSelect";
 import VLoader from "@/components/UI/VLoader";
 
 export default [

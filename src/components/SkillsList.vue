@@ -1,6 +1,5 @@
 <template>
   <div class="skills">
-    <h1 class="skills__title title">Skills</h1>
     <div class="skills__list">
       <skill-element v-if="skills.length" v-for="skill in skills" :key="skill.id" :skill="skill" @edit="editSkill" @remove="removeSkill"></skill-element>
       <div v-else class="skills__empty">Список пуст</div>
@@ -36,13 +35,6 @@ export default {
 <style scoped lang="scss">
   .skills {
     padding: 40px 0;
-
-    &__title {
-      padding-bottom: 40px;
-      font-weight: 600;
-      font-size: 48px;
-      color: #2E4052;
-    }
 
     &__list {
       display: flex;

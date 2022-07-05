@@ -15,6 +15,8 @@ export default {
   .btn-w-i {
     display: flex;
     align-items: center;
+    text-align: center;
+    justify-content: center;
     line-height: 24px;
     column-gap: 10px;
     min-height: 24px;
