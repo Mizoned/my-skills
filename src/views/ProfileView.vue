@@ -31,6 +31,7 @@ import EditSkillForm from "@/components/EditSkillForm";
 import VLoader from "@/components/UI/VLoader";
 import { child, get, getDatabase, ref, push, update, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import {useStore} from "vuex";
 
 export default {
   name: "ProfileView",

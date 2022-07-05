@@ -3,23 +3,32 @@
     <div class="sign-in__inner">
       <div class="sign-in__title">SIGN IN</div>
       <div class="sign-in__inputs">
-        <input-form class="sign-in__input" v-model="email" type="email" placeholder="Enter email"/>
-        <input-form class="sign-in__input" v-model="password" type="password" placeholder="Enter password"/>
+        <input-form class="sign-in__input" v-model="login_form.email" type="email" placeholder="Enter email"/>
+        <input-form class="sign-in__input" v-model="login_form.password" type="password" placeholder="Enter password"/>
       </div>
-      <button-component class="sign-in__button" @click="submitHandler">Sign In</button-component>
+      <button-component class="sign-in__button" @click="login">Sign In</button-component>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "SignIn",
   components: {},
 
-  data() {
+  setup() {
+    const login_form = ref({});
+    const store = useStore();
+
+    const login = () => {
+      store.dispatch('login', login_form.value);
+    }
     return {
-      email: '',
-      password: ''
+      login_form,
+      login
     }
   },
   methods: {

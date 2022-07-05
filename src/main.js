@@ -4,7 +4,7 @@ import router from '@/router'
 import componentsUI from '@/components/UI'
 import store from '@/store'
 import directives from "@/directives";
-import firebase from "./firebase";
+import firebase from "@/firebase";
 
 import '@/assets/styles/main.css';
 

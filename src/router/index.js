@@ -2,24 +2,25 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import ProfileView from "@/views/ProfileView";
-import SignIn from "@/views/SignIn";
+import Login from "@/views/Login";
 import Register from "@/views/Register";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
+import {getAuth} from "firebase/auth";
 
 const routes = [
   {
     path: '/',
-    redirect: '/profile',
-    meta: { authentication: true }
+    component: HomeView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',
     component: ProfileView,
-    meta: { authentication: true },
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',
-    component: SignIn
+    component: Login
   },
   {
     path: '/register',
@@ -40,29 +41,18 @@ const router = createRouter({
   routes
 });
 
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const removeListener = onAuthStateChanged(
-        getAuth(),
-        (user) => {
-          removeListener();
-          resolve(user)
-        },
-        reject
-    );
-  });
-}
-
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some((record) => record.meta.authentication)) {
-    if (await getCurrentUser) {
-      next();
-    } else {
-      next('/login');
-    }
-  } else {
-    next();
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login' && auth.currentUser) {
+    next('/');
+    return;
   }
-});
+
+  if (to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
+    next('/login');
+    return;
+  }
+
+  next();
+})
 
 export default router

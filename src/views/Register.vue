@@ -22,14 +22,13 @@ export default {
   },
   methods: {
     async submitHandler() {
-      console.log('hi')
       const formData = {
         email: this.email,
         password: this.password
       }
 
       try {
-        await this.$store.dispatch('signUp', formData)
+        await this.$store.dispatch('logout')
         await this.$router.push('/');
       } catch (e) {}
     }
