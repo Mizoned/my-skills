@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 const routes = [
   {
     path: '/',
-    component: HomeView
+    redirect: '/profile',
   },
   {
     path: '/profile',
