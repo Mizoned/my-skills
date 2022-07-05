@@ -1,6 +1,6 @@
 <template>
   <skills-list v-if="!isSkillLoading" :skills="skills" @edit="editSkill" @remove="removeSkill"></skills-list>
-  <div class="loading" v-else>Загрузка...</div>
+  <v-loader class="loading" v-else></v-loader>
   <dialog-window v-model:show="dialogVisible">
     <edit-skill-form @save="saveSkill" @cancel="dialogVisible = false" :skill="tmpSkill"></edit-skill-form>
   </dialog-window>
@@ -10,9 +10,10 @@
 import SkillsList from "@/components/SkillsList";
 import EditSkillForm from "@/components/EditSkillForm";
 import axios from 'axios';
+import VLoader from "@/components/UI/VLoader";
 export default {
   name: "HomeView",
-  components: { SkillsList, EditSkillForm },
+  components: {VLoader, SkillsList, EditSkillForm },
   data() {
     return {
       skills: [],
@@ -60,14 +61,12 @@ export default {
 }
 </script>
 <style scoped>
-  .home-page {
-    padding: 40px 0;
-  }
   .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 25px 0;
     font-size: 24px;
-    background: #D3E8FF;
-    color: #2E4052;
     border-radius: 5px;
     text-align: center;
     font-weight: 600;

@@ -5,7 +5,7 @@ import SkillName from "@/components/SkillName";
 import ButtonComponent from "@/components/UI/ButtonComponent";
 import IInputForm from "@/components/UI/InputForm";
 import VSelect from "@/components/UI/V-Select";
-
+import VLoader from "@/components/UI/VLoader";
 
 export default [
     ButtonWithIcon,
@@ -14,5 +14,6 @@ export default [
     SkillName,
     ButtonComponent,
     IInputForm,
-    VSelect
+    VSelect,
+    VLoader
 ];
