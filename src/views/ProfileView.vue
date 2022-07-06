@@ -16,7 +16,7 @@
   <v-loader class="loading" v-else></v-loader>
 
   <dialog-window v-model:show="editDialogVisible">
-    <edit-skill-form @save="updateSkill" @cancel="editDialogVisible = false" :skill="tmpSkill"></edit-skill-form>
+    <edit-skill-form @save="updateSkill" :skill="tmpSkill"></edit-skill-form>
   </dialog-window>
 
   <dialog-window v-model:show="addDialogVisible">
@@ -55,19 +55,19 @@ export default {
   methods: {
     editSkill(skill) {
       let index = this.skills.findIndex(item => item.id === skill.id);
-      this.tmpSkill = skill;
-      this.tmpSkill.index = index;
+      this.tmpSkill = { ...this.skills[index] };
       this.showEditDialog();
     },
     updateSkill(skill) {
       const database = getDatabase();
-      const refUserSkill = ref(database, '/users/'+ auth.currentUser.uid + '/skills/' + this.tmpSkill.id);
+      const refUserSkill = ref(database, '/users/'+ auth.currentUser.uid + '/skills/' + skill.id);
 
       update(refUserSkill, skill).then(() => {
-        this.skills[this.tmpSkill.index] = { ...skill };
+        let index = this.skills.findIndex(item => item.id === skill.id);
+        this.skills[index] = { ...skill };
         this.tmpSkill = {};
       }).catch((error) => {
-        console.log(error)
+        console.error(error)
       }).finally(() => {
         this.editDialogVisible = false;
       });
@@ -79,7 +79,7 @@ export default {
       remove(refUserSkill).then((res) => {
         this.skills = [...this.skills.filter(s => s.id !== skill.id)];
       }).catch((error) => {
-        console.log(error);
+        console.error(error);
       });
     },
     selectedOption(option) {
@@ -96,8 +96,6 @@ export default {
       get(child(databaseRef, `skills`)).then((snapshot) => {
         if (snapshot.exists()) {
           this.optionSkills = snapshot.val();
-        } else {
-          console.log("No data available");
         }
       }).catch((error) => {
         console.error(error);
