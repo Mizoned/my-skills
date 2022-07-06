@@ -16,11 +16,11 @@
   <v-loader class="loading" v-else></v-loader>
 
   <dialog-window v-model:show="editDialogVisible">
-    <edit-skill-form @save="saveSkill" @cancel="editDialogVisible = false" :skill="tmpSkill"></edit-skill-form>
+    <edit-skill-form @save="updateSkill" @cancel="editDialogVisible = false" :skill="tmpSkill"></edit-skill-form>
   </dialog-window>
 
   <dialog-window v-model:show="addDialogVisible">
-      <add-skill-form :options="optionSkills" @add="addSkill"></add-skill-form>
+    <add-skill-form :options="optionSkills" @add="addSkill"></add-skill-form>
   </dialog-window>
 </template>
 
@@ -29,9 +29,9 @@ import AddSkillForm from "@/components/AddSkillForm";
 import SkillsList from "@/components/SkillsList";
 import EditSkillForm from "@/components/EditSkillForm";
 import VLoader from "@/components/UI/VLoader";
-import { child, get, getDatabase, ref, push, update, set } from "firebase/database";
+import { child, get, getDatabase, ref, push, update, set, remove } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import {useStore} from "vuex";
+import { auth } from "@/firebase";
 
 export default {
   name: "ProfileView",
@@ -59,13 +59,28 @@ export default {
       this.tmpSkill.index = index;
       this.showEditDialog();
     },
-    saveSkill(process) {
-      this.skills[this.tmpSkill.index].process = +process;
-      this.dialogVisible = false;
-      this.tmpSkill = {};
+    updateSkill(skill) {
+      const database = getDatabase();
+      const refUserSkill = ref(database, '/users/'+ auth.currentUser.uid + '/skills/' + this.tmpSkill.id);
+
+      update(refUserSkill, skill).then(() => {
+        this.skills[this.tmpSkill.index] = { ...skill };
+        this.tmpSkill = {};
+      }).catch((error) => {
+        console.log(error)
+      }).finally(() => {
+        this.editDialogVisible = false;
+      });
     },
-    removeSkill(skill) {
-      this.skills = [...this.skills.filter(s => s.id !== skill.id)];
+    async removeSkill(skill) {
+      const database = getDatabase();
+      const refUserSkill = ref(database, '/users/'+ auth.currentUser.uid + '/skills/' + skill.id);
+
+      remove(refUserSkill).then((res) => {
+        this.skills = [...this.skills.filter(s => s.id !== skill.id)];
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     selectedOption(option) {
       this.selectedOptionFilter = option;
@@ -80,7 +95,7 @@ export default {
       const databaseRef = ref(getDatabase());
       get(child(databaseRef, `skills`)).then((snapshot) => {
         if (snapshot.exists()) {
-          this.optionSkills = snapshot.val().filter(s => s !== undefined);
+          this.optionSkills = snapshot.val();
         } else {
           console.log("No data available");
         }
@@ -106,22 +121,22 @@ export default {
     async addSkill(data) {
       try {
         const db = getDatabase();
-        data.id = push(child(ref(db), '/users/' + getAuth().currentUser.uid + '/skills/')).key;
-        const postListRef = ref(db, '/users/' + getAuth().currentUser.uid + '/skills/');
-        const newPostRef = push(postListRef);
-        await set(newPostRef, data);
+        const skillListRef = ref(db, '/users/' + auth.currentUser.uid + '/skills/');
+        const newSkillRef = push(skillListRef);
+        data.id = newSkillRef.key;
+        await set(newSkillRef, data);
+        this.skills.push(data);
       } catch (e) {
         throw e;
+      } finally {
+        this.addDialogVisible = false;
       }
-
-      await this.fetchUserSkills();
     }
   },
   mounted() {
     this.fetchUserSkills();
     this.fetchAllSkillsFromFirebase();
   }
-
 }
 </script>
 

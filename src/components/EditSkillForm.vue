@@ -7,7 +7,7 @@
       <div class="skill-editing-form__content">
           <skill-name :skill="skill"></skill-name>
           <input-form v-focus type="text" v-model="process" placeholder="Process"/>
-          <button-with-icon @click="saveProcess(setProcess)" style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-save-24.svg" alt=""></slot>Save</button-with-icon>
+          <button-with-icon @click="saveSkill" style="align-self: flex-end"><slot name="icon"><img src="@/assets/images/icons/icon-save-24.svg" alt=""></slot>Save</button-with-icon>
       </div>
     </div>
   </div>
@@ -47,8 +47,9 @@ export default {
     }
   },
   methods: {
-    saveProcess(process) {
-      this.$emit('save', process);
+    saveSkill() {
+      this.skill.process = this.setProcess;
+      this.$emit('save', this.skill);
     }
   },
   mounted() {
