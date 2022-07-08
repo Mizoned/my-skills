@@ -20,7 +20,7 @@
   </dialog-window>
 
   <dialog-window v-model:show="addDialogVisible">
-    <add-skill-form :options="optionSkills" @add="addSkill"></add-skill-form>
+    <add-skill-form :options="allowedSkillOptionsToAdd" @add="addSkill"></add-skill-form>
   </dialog-window>
 </template>
 
@@ -43,6 +43,7 @@ export default {
         { id: 2, name: 'Process', value: 'process' },
       ],
       optionSkills: [],
+      allowedSkillOptionsToAdd: [],
       selectedOptionFilter: {},
       editDialogVisible: false,
       addDialogVisible: false,
@@ -91,7 +92,7 @@ export default {
     showAddDialog() {
       this.addDialogVisible = true;
     },
-    async fetchAllSkillsFromFirebase() {
+    async fetchSkillOptionsFromFirebase() {
       const databaseRef = ref(getDatabase());
       get(child(databaseRef, `skills`)).then((snapshot) => {
         if (snapshot.exists()) {
@@ -129,11 +130,25 @@ export default {
       } finally {
         this.addDialogVisible = false;
       }
+    },
+    setAllowedSkillOptionsToAdd() {
+      let array = [...this.optionSkills];
+      this.skills.forEach(userSkill => {
+        array = [...array].filter(optSkill => optSkill.name !== userSkill.name);
+      });
+      return array;
     }
   },
   mounted() {
     this.fetchUserSkills();
-    this.fetchAllSkillsFromFirebase();
+    this.fetchSkillOptionsFromFirebase();
+  },
+  watch: {
+    addDialogVisible(newValue) {
+      if (newValue === false) return;
+
+      this.allowedSkillOptionsToAdd = this.setAllowedSkillOptionsToAdd();
+    }
   }
 }
 </script>
