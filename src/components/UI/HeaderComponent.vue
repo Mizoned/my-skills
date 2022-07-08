@@ -23,7 +23,12 @@
 
 <style scoped lang="scss">
   .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 25px 0;
+    z-index: 999;
     background: #D3E8FF;
 
     &__inner {

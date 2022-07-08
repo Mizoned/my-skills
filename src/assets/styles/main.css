@@ -13,6 +13,9 @@
   box-sizing: border-box;
   font-family: "Open Sans", "Circular Std", "PT Sans Narrow", sans-serif;
 }
+body {
+  margin-top: 114px;
+}
 
 html {
   scroll-behavior: smooth;
