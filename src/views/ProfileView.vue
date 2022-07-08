@@ -108,8 +108,6 @@ export default {
       get(child(databaseRef, `/users/`+ getAuth().currentUser.uid +`/skills`)).then((snapshot) => {
         if (snapshot.exists()) {
           this.skills = Object.values(snapshot.val());
-        } else {
-          console.log("No data available");
         }
       }).catch((error) => {
         console.error(error);

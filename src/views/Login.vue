@@ -30,19 +30,6 @@ export default {
       login_form,
       login
     }
-  },
-  methods: {
-    async submitHandler() {
-      const formData = {
-        email: this.email,
-        password: this.password
-      }
-
-      try {
-        await this.$store.dispatch('signIn', formData)
-        await this.$router.push('/');
-      } catch (e) {}
-    }
   }
 }
 </script>

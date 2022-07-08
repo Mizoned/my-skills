@@ -3,34 +3,30 @@
     <div class="sign-up__inner">
       <div class="sign-up__title">SIGN UP</div>
       <div class="sign-up__inputs">
-        <input-form class="sign-up__input" v-model="email" type="email" placeholder="Enter email"/>
-        <input-form class="sign-up__input" v-model="password" type="password" placeholder="Enter password"/>
+        <input-form class="sign-up__input" v-model="register_form.email" type="email" placeholder="Enter email"/>
+        <input-form class="sign-up__input" v-model="register_form.password" type="password" placeholder="Enter password"/>
       </div>
-      <button-component class="sign-up__button" @click="submitHandler">Sign Up</button-component>
+      <button-component class="sign-up__button" @click="register">Sign Up</button-component>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "Register",
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  methods: {
-    async submitHandler() {
-      const formData = {
-        email: this.email,
-        password: this.password
-      }
+  setup() {
+    const register_form = ref({});
+    const store = useStore();
 
-      try {
-        await this.$store.dispatch('logout')
-        await this.$router.push('/');
-      } catch (e) {}
+    const register = () => {
+      store.dispatch('register', register_form.value);
+    }
+    return {
+      register_form,
+      register
     }
   }
 }
