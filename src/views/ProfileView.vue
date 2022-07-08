@@ -12,7 +12,7 @@
   <h1 class="profile__title title">Skills</h1>
 
 
-  <skills-list v-if="!isSkillLoading" :skills="skills" @edit="editSkill" @remove="removeSkill"></skills-list>
+  <skills-list v-if="!isSkillLoading" :skills="sortedAndSearchedSkills" @edit="editSkill" @remove="removeSkill"></skills-list>
   <v-loader class="loading" v-else></v-loader>
 
   <dialog-window v-model:show="editDialogVisible">
@@ -148,6 +148,14 @@ export default {
       if (newValue === false) return;
 
       this.allowedSkillOptionsToAdd = this.setAllowedSkillOptionsToAdd();
+    }
+  },
+  computed: {
+    sortedSkills() {
+      return [...this.skills].sort((skill1, skill2) => String(skill1[this.selectedOptionFilter.value])?.localeCompare(String(skill2[this.selectedOptionFilter.value])))
+    },
+    sortedAndSearchedSkills() {
+      return this.sortedSkills.filter(skill => skill.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   }
 }
