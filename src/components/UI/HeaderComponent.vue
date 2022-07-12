@@ -13,7 +13,7 @@
           </div>
           <div class="header__profile-btns">
             <button-with-icon class="header__profile-logout" @click="$store.dispatch('logout')"><img src="@/assets/images/icons/icon-logout-24.svg"></button-with-icon>
-            <button-with-icon class="header__profile-settings"><img src="@/assets/images/icons/icon-settigns-24.svg"></button-with-icon>
+            <button-with-icon class="header__profile-settings" @click="$router.push('/profile/settings')"><img src="@/assets/images/icons/icon-settigns-24.svg"></button-with-icon>
           </div>
         </div>
       </nav>

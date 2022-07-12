@@ -4,7 +4,7 @@
       <div class="v-select__skill">
         <div class="v-select__option-img">
           <img v-if="selected.name" :src="formPathImage(selected.src)" :title="selected.name" alt="">
-          <img v-else src="@/assets/images/icons/icon-tech-24.svg" title="Select skill" alt="">
+          <img v-else src="@/assets/images/icons/icon-tech-36.svg" title="Select skill" alt="">
         </div>
         <p v-if="selected.name">{{ selected.name }}</p>
         <p v-else class="v-select--no-active">Select...</p>

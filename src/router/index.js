@@ -4,8 +4,9 @@ import NotFoundView from '@/views/NotFoundView.vue'
 import ProfileView from "@/views/ProfileView";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
+import ProfileSettingsView from "@/views/ProfileSettingsView";
 import { auth } from "@/firebase";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
   {
     path: '/profile',
     component: ProfileView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/profile/settings',
+    component: ProfileSettingsView,
     meta: { requiresAuth: true },
   },
   {
@@ -43,7 +49,7 @@ const router = createRouter({
 
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
-    const removeListener = onAuthStateChanged(getAuth(), (user) => {
+    const removeListener = onAuthStateChanged(auth, (user) => {
       removeListener();
       resolve(user);
     }, reject);
