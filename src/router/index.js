@@ -5,7 +5,7 @@ import ProfileView from "@/views/ProfileView";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import { auth } from "@/firebase";
-import {getAuth} from "firebase/auth";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 
 const routes = [
   {
@@ -41,13 +41,19 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login' && auth.currentUser) {
-    next('/');
-    return;
-  }
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListener = onAuthStateChanged(getAuth(), (user) => {
+      removeListener();
+      resolve(user);
+    }, reject);
+  });
+}
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
+
+router.beforeEach(async (to, from, next) => {
+  const currentUser = await getCurrentUser();
+  if (to.matched.some(record => record.meta.requiresAuth) && !currentUser) {
     next('/login');
     return;
   }

@@ -1,6 +1,5 @@
 <template>
   <div class="profile">
-    <button-component class="profile__logout" @click="$store.dispatch('logout')">Logout</button-component>
     <div class="profile__search">
       <input-form v-focus type="text" v-model="searchQuery" placeholder="Search..."/>
       <v-select :options="options" :selected="selectedOptionFilter.name" @select="selectedOption"></v-select>
@@ -165,10 +164,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
-
-    &__logout {
-      align-self: flex-end;
-    }
 
     &__title {
       font-weight: 600;

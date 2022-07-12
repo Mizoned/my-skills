@@ -3,10 +3,12 @@
     <div class="sign-up__inner">
       <div class="sign-up__title">SIGN UP</div>
       <div class="sign-up__inputs">
+        <input-form class="sign-up__input" v-model="register_form.name" type="text" placeholder="Your name"/>
         <input-form class="sign-up__input" v-model="register_form.email" type="email" placeholder="Enter email"/>
         <input-form class="sign-up__input" v-model="register_form.password" type="password" placeholder="Enter password"/>
       </div>
       <button-component class="sign-up__button" @click="register">Sign Up</button-component>
+      <span class="sign-up__login">Already have an account? <router-link to="/login">Sign in</router-link></span>
     </div>
   </div>
 </template>
@@ -60,8 +62,19 @@ export default {
     flex-direction: column;
     row-gap: 16px;
   }
+
   &__button {
     max-width: 130px;
+  }
+
+  &__login {
+    font-size: 14px;
+    color: #2E4052;
+    font-weight: 700;
+    a {
+      text-decoration: none;
+      color: #49a074;
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import router from '../router';
 import { auth } from '@/firebase';
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile} from "firebase/auth";
 
 export default createStore({
   state: {
@@ -41,10 +41,13 @@ export default createStore({
       router.push('/');
     },
     async register({ commit }, details) {
-      const { email, password } = details;
+      const { email, password, name } = details;
 
       try {
         await createUserWithEmailAndPassword(getAuth(), email, password);
+
+        await updateProfile(auth.currentUser, { displayName: name });
+
       } catch (e) {
         throw e;
       }

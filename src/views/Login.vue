@@ -7,6 +7,7 @@
         <input-form class="sign-in__input" v-model="login_form.password" type="password" placeholder="Enter password"/>
       </div>
       <button-component class="sign-in__button" @click="login">Sign In</button-component>
+      <span class="sign-in__register">Don’t have an account? <router-link to="/register">Sign up</router-link></span>
     </div>
   </div>
 </template>
@@ -65,6 +66,16 @@ export default {
 
     &__button {
       max-width: 130px;
+    }
+
+    &__register {
+      font-size: 14px;
+      color: #2E4052;
+      font-weight: 700;
+      a {
+        text-decoration: none;
+        color: #49a074;
+      }
     }
   }
 </style>
