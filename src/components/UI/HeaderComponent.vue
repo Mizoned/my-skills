@@ -6,7 +6,7 @@
           <img class="logo__img" src="@/assets/images/logo.svg" alt="">
           <div class="logo__text">Vue JS</div>
         </div>
-        <div class="header__profile-wrapper" v-if="$store.state.user">
+        <div class="header__profile-wrapper" v-if="$store.state.user && $store.state.user.displayName">
           <div class="header__profile profile" @click="$router.push('/profile')">
             <div class="header__profile-username">{{ $store.state.user.displayName }}</div>
             <img class="header__profile-img" src="@/assets/images/profile.png" alt="">
@@ -29,12 +29,7 @@
 
 <style scoped lang="scss">
   .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     padding: 25px 0;
-    z-index: 999;
     background: #D3E8FF;
 
     &__inner {

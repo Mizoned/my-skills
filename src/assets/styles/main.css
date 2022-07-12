@@ -13,9 +13,6 @@
   box-sizing: border-box;
   font-family: "Open Sans", "Circular Std", "PT Sans Narrow", sans-serif;
 }
-body {
-  margin-top: 114px;
-}
 
 html {
   scroll-behavior: smooth;
@@ -43,6 +40,6 @@ button {
   padding: 0 20px;
 }
 
-.container__wrapper {
-  padding: 40px 0;
+.content {
+  padding: 60px 0;
 }

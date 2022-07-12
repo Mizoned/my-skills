@@ -45,9 +45,8 @@ export default createStore({
 
       try {
         await createUserWithEmailAndPassword(getAuth(), email, password);
-
-        await updateProfile(auth.currentUser, { displayName: name });
-
+        await updateProfile(auth.currentUser, { displayName: name })
+            .then(() => auth.updateCurrentUser(auth.currentUser));
       } catch (e) {
         throw e;
       }
