@@ -6,6 +6,7 @@ import ButtonComponent from "@/components/UI/ButtonComponent";
 import IInputForm from "@/components/UI/InputForm";
 import VSelect from "@/components/UI/VSelect";
 import VLoader from "@/components/UI/VLoader";
+import TogglePassword from "@/components/UI/TogglePassword";
 
 export default [
     ButtonWithIcon,
@@ -15,5 +16,6 @@ export default [
     ButtonComponent,
     IInputForm,
     VSelect,
-    VLoader
+    VLoader,
+    TogglePassword
 ];

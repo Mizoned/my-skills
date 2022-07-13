@@ -4,7 +4,10 @@
       <div class="sign-in__title">SIGN IN</div>
       <div class="sign-in__inputs">
         <input-form class="sign-in__input" v-model="login_form.email" type="email" placeholder="Enter email"/>
-        <input-form class="sign-in__input" v-model="login_form.password" type="password" placeholder="Enter password"/>
+        <div class="input-password-wrapper">
+          <input-form class="sign-in__input" v-model="login_form.password" :type="!isTogglePassword ? 'password' : 'text'" placeholder="Enter password"/>
+          <toggle-password v-model:isTogglePassword="isTogglePassword"/>
+        </div>
       </div>
       <button-component class="sign-in__button" @click="login">Sign In</button-component>
       <span class="sign-in__register">Don’t have an account? <router-link to="/register">Sign up</router-link></span>
@@ -19,7 +22,11 @@ import { useStore } from "vuex";
 export default {
   name: "SignIn",
   components: {},
-
+  data() {
+    return {
+      isTogglePassword: false
+    }
+  },
   setup() {
     const login_form = ref({});
     const store = useStore();
@@ -30,6 +37,12 @@ export default {
     return {
       login_form,
       login
+    }
+  },
+  methods: {
+    togglePassword(toggle) {
+      console.log('test')
+      this.isTogglePassword = toggle;
     }
   }
 }
@@ -77,5 +90,9 @@ export default {
         color: #49a074;
       }
     }
+  }
+
+  .input-password-wrapper {
+    position: relative;
   }
 </style>
