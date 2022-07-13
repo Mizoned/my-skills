@@ -206,7 +206,13 @@ export default {
 
     &__buttons {
       display: flex;
-      justify-content: flex-end;
+      align-self: center;
+      width: 100%;
+      max-width: 500px;
+
+      button {
+        width: 100%;
+      }
     }
   }
 
