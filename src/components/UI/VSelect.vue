@@ -47,7 +47,7 @@ export default {
 
 <style scoped lang="scss">
   .v-select {
-    min-width: 300px;
+    width: 100%;
     position: relative;
     border: 1px solid #2E4052;
     border-radius: 5px;
@@ -75,8 +75,9 @@ export default {
       width: 100%;
       margin: 12px 0 0 0;
       background-color: #FFFFFF;
-      left: 0;
+      left: -1px;
       right: 0;
+      box-sizing: content-box;
       max-height: 118px;
       overflow-y: scroll;
 

@@ -54,7 +54,7 @@
         line-height: 54px;
         color: #2E4052;
 
-        @media screen and (max-width: 512px) {
+        @media screen and (max-width: 768px) {
           display: none;
         }
       }
@@ -80,6 +80,14 @@
         img {
           width: 18px;
           height: 18px;
+        }
+      }
+    }
+
+    &__logo {
+      @media screen and (max-width: 425px) {
+        .logo__text {
+          display: none;
         }
       }
     }

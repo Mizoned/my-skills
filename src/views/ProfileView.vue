@@ -1,8 +1,8 @@
 <template>
   <div class="profile">
     <div class="profile__search">
-      <input-form v-focus type="text" v-model="searchQuery" placeholder="Search..."/>
-      <v-select :options="options" :selected="selectedOptionFilter.name" @select="selectedOption"></v-select>
+      <input-form class="profile__search-input" v-focus type="text" v-model="searchQuery" placeholder="Search..."/>
+      <v-select class="profile__search-select" :options="options" :selected="selectedOptionFilter.name" @select="selectedOption"></v-select>
     </div>
     <div class="profile__buttons">
       <button-component @click="showAddDialog">Add Skill</button-component>
@@ -164,16 +164,44 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-bottom: 20px;
 
     &__title {
       font-weight: 600;
       font-size: 48px;
       color: #2E4052;
+
+      @media screen and (max-width: 425px) {
+        font-size: 36px;
+      }
     }
 
     &__search {
       display: flex;
+      gap: 20px;
       justify-content: space-between;
+      flex-direction: column;
+
+      &-input {
+        width: 100%;
+        max-width: 500px;
+        align-self: center;
+      }
+      &-select {
+        width: 100%;
+        max-width: 500px;
+        align-self: center;
+        min-width: unset;
+      }
+      @media screen and (max-width: 768px) {
+
+        align-items: flex-start;
+      }
+
+      @media screen and (max-width: 425px) {
+        flex-direction: column;
+        align-items: unset;
+      }
     }
 
     &__buttons {

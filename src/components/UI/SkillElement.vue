@@ -2,7 +2,7 @@
   <div class="skill">
     <div class="skill__inner">
       <div class="skill__content">
-        <skill-name :skill="skill"></skill-name>
+        <skill-name class="skill__content-name" :skill="skill"></skill-name>
       </div>
       <div class="skill__control">
         <div class="skill__diagram">
@@ -59,22 +59,48 @@ export default {
       align-items: center;
     }
 
+    &__content {
+      @media screen and (max-width: 425px) {
+        &-name {
+          flex-direction: column;
+          row-gap: 5px;
+        }
+      }
+    }
+
     &__control {
       display: flex;
-      column-gap: 16px;
+      gap: 16px;
       align-items: center;
+
+      @media screen and (max-width: 425px) {
+        justify-content: center;
+        flex-direction: column;
+      }
     }
 
     &__inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
+
+      @media screen and (max-width: 425px) {
+        justify-content: center;
+        flex-direction: column;
+      }
     }
 
     &__buttons {
       display: flex;
       flex-direction: column;
       row-gap: 6px;
+
+      @media screen and (max-width: 425px) {
+        justify-content: space-between;
+        flex-direction: row;
+        width: 100%;
+      }
     }
   }
 </style>
